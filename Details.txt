@@ -1,0 +1,109 @@
+
+Topics:
+
+  0. Recap ExpressJS
+
+  0.1. URL Params:
+    Path Params: /:id
+
+        id or name is the path variable/param
+      request.params in expressjs
+
+      param is *id*
+    
+    Query Params: comes after question mark
+      request.query --> { deleteId: '100' }
+      /todos?deleteId=100
+      param is *deleteId*
+
+  1. Express Router:
+      Separate & Modularise the API logics using router
+
+      instead of dumping all the API logics in one single file
+  
+  2. Create APIs for the sample questions below,
+
+      DB Design,
+        Movie - {
+          title: string,
+          duration: number,
+          id: string
+        }
+        Theater - {
+          id: string,
+          name: string,
+          noOfScreens: number,
+          shows: movie[],
+        }
+
+      1. Create Movie
+          /movies - GET all Movies
+          /movies - POST a new movie
+          /movies/<movie-id> - GET
+          /movies/<movie-id>/theaters - Get all the theaters where the movie is running
+      2. Create Theater
+          /theaters - GET all theaters
+          /theaters - POST a new theater
+          /theaters/<theater-id> - GET a theater
+          /theaters/shows - GET all the movies running for a theater
+
+          How will a movie be added to a theater's show
+
+          /theaters/<theater-id>/add-movie - POST
+            Payload - {
+              movieId: string,
+              timing: string, '4:00PM'
+            }
+
+      Without any DB, keep local memory variable to store & retrieve.
+      This way data will be lost once the server restart, but that is fine for now
+
+Next Session:
+  3. DB Connection ---> MongoDB 
+
+    Step 1:
+      Connection to a DB
+    Step 2: 
+      Write Queries to do CRUD opertion with DB
+
+    to connect to any DB We need driver setup for any language
+
+    Packages:
+      MongoDB -> Simple Connecting to DB and writing ontop of the database
+      Mongoose:
+        what is mongoose?
+          schema based object modelling tool for connecting & doing CRUD operation on DB
+
+        schema
+
+        DB Connection:
+          URI string to identify the database service
+    
+  4. Converting the Local variable to Local DB
+        local memory storing will loose the data after server restart
+
+        but local DB Data will be persisted locally in the machine
+
+  5. Cloud DB:
+      1. Cloud Atlas:
+
+        Signing Up & Creating Cloud DB
+
+        Connecting with Cloud Atlas DB
+      
+        DB Create: 
+          1. Sign up on https://cloud.mongodb.com/
+          2. Cluster Creation
+          3. Database Creation ( Select M0 Free Version & Create )
+          4. Username with Password, Note those details somewhere safe
+          5. Add 0.0.0.0/0 in the network - this open up the db for anybody with username/password to connect to it
+          5. Copy the Connect URL and replace with the local url
+
+              mongodb+srv://<username>:<password>@cluster0.ruapl1v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+              mongodb+srv://sanjaysaravanan00007:<password>@cluster0.yxr2hty.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+  Deployment:
+
+    Cloud Backend ( NodeJs in Render.com ) <-> Cloud DB ( Mongo Cluster )
+
